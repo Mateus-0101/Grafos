@@ -118,10 +118,10 @@ int main()
     while(aux != NULL)
     {
         DFS(g, aux->valor);
-        //g->componentes++;
         aux = aux->prox;
     }
-    cont = g->componentes-1; //Retira primeira entrada
+    cont = g->componentes;
+    cont--; //Retira primeira entrada
     
     printf("Componentes conectados: %d\n", cont);
 
