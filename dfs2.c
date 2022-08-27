@@ -15,28 +15,6 @@ struct grafo
     struct no** listaAdj;
 }grafo;
 
-void DFS(struct grafo* g, int vertice)
-{
-    struct no* listaAdj = g->listaAdj[vertice];
-    struct no* aux = listaAdj;
-
-    g->visitado[vertice] = 1; //Nó inicial ou raiz
-    printf("Visitado %d\n", vertice);
-
-    while(aux != NULL)
-    {
-        int vizinho = aux->valor; //Diz respetio ao vértice conectado
-
-        if(g->visitado[vizinho] == 0)
-        {
-            g->componentes++;
-            //Visitará os vértices adjacentes ao vértice atual da pilha
-            DFS(g, vizinho);
-        }
-
-        aux = aux->prox;
-    }
-}
 
 struct no* criar_no(int valor)
 {
@@ -80,13 +58,41 @@ void mostrar_grafo(struct grafo* g)
     {
         struct no* aux = g->listaAdj[i];
 
-        printf("Lista de adjacência do nó %d\n", i);
+        printf("\nLista de adjacência do nó %d\n", i+1);
 
         while(aux != NULL)
         {
             printf("%d -> ", aux->valor);
             aux =aux->prox;
         }
+    }
+}
+
+void DFS(struct grafo* g, int vertice)
+{
+    struct no* listaAdj = g->listaAdj[vertice];
+    struct no* aux = listaAdj;
+
+    g->visitado[vertice] = 1; //Nó inicial ou raiz
+    printf("Visitado %d\n", vertice);
+
+    if(g->listaAdj[vertice] == NULL)
+    {
+        return;
+    }
+
+    while(aux != NULL)
+    {
+        int vizinho = aux->valor; //Diz respetio ao vértice conectado a raiz atual
+
+        if(g->visitado[vizinho] == 0)
+        {
+            //Visitará os vértices adjacentes ao vértice atual da pilha
+            DFS(g, vizinho);
+            g->componentes++;
+        }
+
+        aux = aux->prox;
     }
 }
 
@@ -99,10 +105,6 @@ int main()
     
     struct grafo* g = criar_grafo(nos);
     
-    struct no* listaAdj = g->listaAdj;
-    struct no* aux = listaAdj;
-
-
     for(int i = 0; i < arcos; i++)
     {
         printf("Insiras os nós conectados, u e v: ");
@@ -111,13 +113,15 @@ int main()
         adicionar_arco(g,u,v);
     }
     
+    struct no* aux = g->listaAdj;
+
     while(aux != NULL)
     {
-        DFS(g,aux->valor);
+        DFS(g, aux->valor);
+        //g->componentes++;
         aux = aux->prox;
     }
-   
-    cont = g->componentes-1;
+    cont = g->componentes-1; //Retira primeira entrada
     
     printf("Componentes conectados: %d\n", cont);
 
