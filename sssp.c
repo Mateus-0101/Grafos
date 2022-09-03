@@ -9,7 +9,7 @@ typedef struct vertice
     int tamanho;
 }vertice;
 
-void DFS(vertice *v , int qtd_vertices, int origem)
+void DFS(vertice *v , int qtd_vertices, int origem, int distancia)
 {
     if(v[origem].visitado != 0)
     {
@@ -19,20 +19,21 @@ void DFS(vertice *v , int qtd_vertices, int origem)
     v->distancia = 0;
 
     v[origem].visitado = 1;
+    v[origem].distancia = distancia;
 
     for(int i = 0; i < v[origem].tamanho; i++)
     {
         if(v[v[origem].lista_adj[i]].visitado == 0)
         {
-            DFS(v,qtd_vertices,v[origem].lista_adj[i]);
-            v->distancia++;
+            DFS(v,qtd_vertices,v[origem].lista_adj[i], distancia+1);
         }
     }
 }
 
 int main()
 {
-    int qtd_cidades, estradas, u, v, garotas, morada;
+    int qtd_cidades, estradas, u, v, qtd_garotas, morada;
+    int garotas[100];
     vertice *cidade;
 
     printf("Defina a  quantidade de cidades: ");
@@ -52,36 +53,38 @@ int main()
         cidade[v].tamanho++;
     }
 
-    printf("Defina a quantidade de garotas: ");
-    scanf("%d", &garotas);
+    DFS(cidade,qtd_cidades,1,0);
 
-    for(int i = 0; i < garotas; i++)
+    printf("Defina a quantidade de garotas: ");
+    scanf("%d", &qtd_garotas);
+
+    for(int i = 0; i < qtd_garotas; i++)
     {
         printf("Difina a cidade que a garota %d mora: ", i+1);
-        scanf("%d", &morada);
-
-        cidade[morada].lista_adj;
+        scanf("%d", &garotas[i]);
     }
 
-    for(int i = 0; i < qtd_cidades; i++)
+    int id_escolhida = garotas[0];
+
+    for(int i = 0; i < qtd_garotas; i++)
     {
-        if(cidade[i].visitado == 0)
+        if(cidade[garotas[i]].distancia < cidade[id_escolhida].distancia)
         {
-            DFS(cidade,qtd_cidades,1);
+            id_escolhida = garotas[i];
+        }
+        else
+        {
+            if(cidade[garotas[i]].distancia == cidade[id_escolhida].distancia)
+            {
+                if(garotas[i] < id_escolhida)
+                {
+                    id_escolhida = garotas[i];
+                }
+            }
         }
     }
 
-    int menor = 1;
-
-    for(int i = 0; i < qtd_cidades; i++)
-    {
-        if(menor > cidade[i].distancia)
-        {
-            menor = cidade[i].distancia;
-        }
-    }
-
-    printf("A garota mais próxima está na cidade %d\n", menor);
+    printf("A garota mais próxima está na cidade %d\n", id_escolhida);
 
     return 0;
 }
