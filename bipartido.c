@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int bandeira = 0;
+
 typedef struct vertices
 {
     int visitado;
@@ -18,7 +20,7 @@ void DFS(vertices *v, int qtd_vertices, int raiz)
 
     v[raiz].visitado = 1;
 
-    for(int i = 0; i < qtd_vertices; i++)
+    for(int i = 0; i < v[raiz].tamanho; i++)
     {
         if(v[v[raiz].lista_adj[i]].visitado == 0)
         {
@@ -26,8 +28,7 @@ void DFS(vertices *v, int qtd_vertices, int raiz)
 
             if(v[v[raiz].lista_adj[i]].cor == v[v[raiz].lista_adj[i+1]].cor)
             {
-                printf("Grafo não é bipartido\n");
-                break;
+                bandeira = 1;
             }
         }
     }
@@ -54,7 +55,14 @@ int main()
 
     DFS(vertice,qtd_vertices,1);
 
-    printf("Grafo é bipartido\n");
+    if(bandeira == 1)
+    {
+        printf("O grafo não é bipartido.\n");
+    }
+    else
+    {
+        printf("Grafo é bipartido\n");
+    }
 
     return 0;
 }
