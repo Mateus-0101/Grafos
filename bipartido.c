@@ -22,14 +22,15 @@ void DFS(vertices *v, int qtd_vertices, int raiz)
 
     for(int i = 0; i < v[raiz].tamanho; i++)
     {
+
         if(v[v[raiz].lista_adj[i]].visitado == 0)
         {
-            DFS(v,qtd_vertices,v[raiz].lista_adj[i]);
-
             if(v[v[raiz].lista_adj[i]].cor == v[v[raiz].lista_adj[i+1]].cor)
             {
                 bandeira = 1;
             }
+
+            DFS(v,qtd_vertices,v[raiz].lista_adj[i]);
         }
     }
 }
@@ -52,6 +53,7 @@ int main()
         vertice[v].lista_adj[vertice[v].cor] = 1;
         vertice[v].tamanho++;
     }
+    //printf("Bandeira: %d\n", bandeira);
 
     DFS(vertice,qtd_vertices,1);
 
