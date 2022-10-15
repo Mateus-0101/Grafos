@@ -13,7 +13,7 @@ typedef struct vertice
     int lower;
 }vertice;
 
-void DFS(vertice *v, int qtd_vertices, int raiz, int *ciclo)
+void DFS(vertice *v, int qtd_vertices, int raiz)
 {
     int filho ;
 
@@ -35,41 +35,33 @@ void DFS(vertice *v, int qtd_vertices, int raiz, int *ciclo)
         if(v[filho].visitado == 0)
         {
             v[filho].pai = raiz;
-            DFS(v,qtd_vertices,v[raiz].lista_adj[i],ciclo);
-        }   
+            DFS(v,qtd_vertices,v[raiz].lista_adj[i]);
 
-        else if(v[raiz].lista_adj[i] != v[raiz].pai) //Achou aresta de retorno
+            //Lógica da ponte
+            if(v[filho].lower > v[raiz].in)
+            {
+                printf("Existe uma ponte entre os vertices %d e %d\n", raiz, v[raiz].lista_adj[i]);
+            }
+            //Calibra lower
+            if(v[raiz].lower > v[filho].lower)
+            {
+                v[raiz].lower = v[filho].lower;
+            }
+        }   
+        else if(v[raiz].lista_adj[i] != v[raiz].pai) //Já visitado: Há aresta de retorno ?
         {
-            (*ciclo) = 1;
             if(v[raiz].lower > v[filho].in)
             {
                 v[raiz].lower = v[filho].in;
             }
-        }
-
-        else if(v[raiz].pai == v[raiz].lista_adj[i])//Vê se está retornando
-        {
-            if(v[raiz].lower < v[filho].lower)
-            {
-                v[filho].lower = v[raiz].lower;
-            }
-        }
-    }
-    for(int i = 0; i < v[raiz].tamanho; i++)
-    {
-        if(v[filho].lower > v[raiz].in)
-        {
-            printf("Existe uma ponte entre os vertices %d e %d\n", raiz, v[raiz].lista_adj[i]);
         }
     }
 }
 
 int main()
 {
-    int qtd_vertices, arestas,u , v, ciclo;
+    int qtd_vertices, arestas,u , v;
     vertice *vertices;
-
-    ciclo = 0;
 
     scanf("%d %d", &qtd_vertices, &arestas);
 
@@ -84,7 +76,7 @@ int main()
         vertices[v].tamanho++;
     }
 
-    DFS(vertices,qtd_vertices,1,&ciclo);
+    DFS(vertices,qtd_vertices,1);
 
     /*
     for(int i = 1; i <= qtd_vertices; i++)
