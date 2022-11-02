@@ -62,8 +62,8 @@ int retirar_fila(fila *f)
     {
         int ret;
 
-        ret = f->inicio->valor;
-        f->inicio = f->inicio->prox;
+        ret = f->inicio->valor; //Retorno será o valor do primeiro da fila
+        f->inicio = f->inicio->prox; //Novo início será o próximo da fila
         f->tamanho--;
 
         return ret;
@@ -99,6 +99,7 @@ void BFS(vertice *v, int raiz)
 int main()
 {
     int qtd_vertices, qtd_arestas, raiz, u, v;
+    int dist = 0;
 
     scanf("%d %d", &qtd_vertices, &qtd_arestas);
 
@@ -118,10 +119,20 @@ int main()
 
     BFS(vertices, raiz); //Em BFS tem que indicar a raiz
 
-    for(int i = 1; i <= qtd_vertices; i++)
+    for(int i = 1; i <= qtd_vertices; i++) //Achar diâmetro em grafos (não árvores) se usa BFS
     {
         printf("\nDistância entre vértice %d e raiz %d = %d\n", i,raiz,vertices[i].distancia);
     }
+
+    for(int i = 1; i <= qtd_vertices; i++)
+    {
+        if(vertices[i].distancia > dist)
+        {
+            dist = vertices[i].distancia;
+        }
+    }
+
+    printf("\nMaior distância a partir de %d = %d\n", raiz, dist);
 
     return 0;
 }

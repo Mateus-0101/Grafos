@@ -9,7 +9,7 @@ typedef struct vertice
     int lista_adj[1000];
 }vertice;
 
-void DFS(vertice *v, int qtd_vertices, int raiz, int distancia, int *prox)
+void DFS(vertice *v, int qtd_vertices, int raiz, int distancia)
 {
     if(v[raiz].visitado != 0)
     {
@@ -18,13 +18,12 @@ void DFS(vertice *v, int qtd_vertices, int raiz, int distancia, int *prox)
 
     v[raiz].visitado = 1;
     v[raiz].distancia = distancia;
-    (*prox) = raiz;
 
     for(int i = 0; i < v[raiz].tamanho; i++)
     {
         if(v[v[raiz].lista_adj[i]].visitado == 0)
         {
-            DFS(v,qtd_vertices,v[raiz].lista_adj[i],(distancia+1),prox);
+            DFS(v,qtd_vertices,v[raiz].lista_adj[i],(distancia+1));
         }
     }
 }
@@ -32,7 +31,7 @@ void DFS(vertice *v, int qtd_vertices, int raiz, int distancia, int *prox)
 int main()
 {
     int qtd_vertice, qtd_arestas, u, v;
-    int prox; //Raíz do segundo DFS
+    int prox = 0, dist = 0; //Raíz do segundo DFS e distância
 
     scanf("%d %d", &qtd_vertice, &qtd_arestas);
 
@@ -48,19 +47,32 @@ int main()
         vertices[v].tamanho++;
     }
 
-    DFS(vertices,qtd_vertice,1,0,&prox);
+    DFS(vertices,qtd_vertice,1,0);
 
     for(int i = 1; i <= qtd_vertice; i++)
     {
-        vertices[i].visitado = 0; //Remarco os vértices como não visitados para poder percorrélos de novo
+        if(vertices[i].distancia > dist)
+        {
+            prox = i; //Encontrando o vértice com a maior distância
+            dist = vertices[i].distancia;
+        }
+
+        vertices[i].distancia = 0;
+        vertices[i].visitado = 0;
     }
 
-    if(vertices[1].tamanho > 1) //Caso o primeiro vértice esteja conectado a mais de um elemento
+    DFS(vertices,qtd_vertice,prox,0);
+
+    for(int i = 1; i <= qtd_vertice; i++)
     {
-        DFS(vertices,qtd_vertice,prox,vertices[prox].distancia,&prox);
+        if(vertices[i].distancia > dist)
+        {
+            prox = i;
+            dist = vertices[i].distancia; //Encontrando a maior distância
+        }
     }
 
-    printf("\nDiâmetro do grafo: %d\n", vertices[prox].distancia);
+    printf("\nDiâmetro do grafo: %d\n", dist);
 
     return 0;
 }

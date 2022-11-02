@@ -45,7 +45,7 @@ void mostrar(vertice *v, int qtd_vertices)
 int main()
 {
     int qtd_vertices, qtd_arestas, qtd_garotas, u, v;
-    int garotas[1000];
+    int *garotas;
 
     scanf("%d %d", &qtd_vertices, &qtd_arestas);
 
@@ -74,7 +74,7 @@ int main()
 
     for( int i = 0; i < qtd_garotas; i++)
     {
-        if(vertices[garotas[i]].distancia < vertices[id_escolhida].distancia)
+        if(vertices[garotas[i]].distancia < vertices[id_escolhida].distancia) //garota[i] = determinado vértice
         {
             id_escolhida = garotas[i];
         }

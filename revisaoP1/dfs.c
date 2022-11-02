@@ -19,7 +19,7 @@ void DFS(vertice *v, int qtd_vertices, int raiz)
 
     for(int i = 0; i < v[raiz].tamanho; i++)
     {
-        if(v[v[raiz].lista_adj[i]].visitado == 0)
+        if(v[v[raiz].lista_adj[i]].visitado == 0) //v[raiz].lista_adj[i] = filho, ou seja: v[filho].visitado == 0
         {
             DFS(v,qtd_vertices,v[raiz].lista_adj[i]);
         }
@@ -30,7 +30,7 @@ void mostrar(vertice *v, int qtd_vertices)
 {
     for(int i = 1; i <= qtd_vertices; i++)
     {
-        printf("\nVértice: %d ", i);
+        printf("\nVértice %d: ", i);
 
         for(int j = 0; j < v[i].tamanho; j++)
         {
@@ -58,8 +58,14 @@ int main()
         vertices[v].tamanho++;
     }
 
-    mostrar(vertices,qtd_vertices);
+    DFS(vertices,qtd_vertices,1);
+
+    //mostrar(vertices,qtd_vertices);
+
 
     printf("\n");
+
+    //TO, BA, AL, PE, CE, PB, RN, PI, MA, PA, AM, AC, RO, MT, GO, DF, MG, ES, RJ, SP, MS, PR, SC, RS, RR, AP, SE.
+    
     return 0;
 }

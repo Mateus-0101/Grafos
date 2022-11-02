@@ -18,14 +18,14 @@ int DFS(vertice *v, int qtd_vertices, int raiz, int cor)
     {
         if(v[v[raiz].lista_adj[i]].visitado == 0)
         {
-            if(!DFS(v,qtd_vertices,v[raiz].lista_adj[i],(cor * -1)))
+            if(!DFS(v,qtd_vertices,v[raiz].lista_adj[i],(cor * -1))) //Chama o DFS, e altera a cor
             {
                 return 0; //Se tiver alguma cor igual ligada, o grafo já não é bipartido
             }
         }
         else
         {
-            if(v[raiz].cor == v[v[raiz].lista_adj[i]].cor)
+            if(v[raiz].cor == v[v[raiz].lista_adj[i]].cor) //Se a cor do filho for igual a do pai...
             {
                 return 0; //Não é bipartido. Ligado a cor igual
             }

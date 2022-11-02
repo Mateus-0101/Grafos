@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cont = 0;
+int cont = 0; //Contador Global
 
 typedef struct vertice
 {
@@ -20,7 +20,7 @@ void DFS(vertice *v, int qtd_vertices, int raiz)
     }
 
     v[raiz].visitado = 1;
-    cont++;
+    cont++; //Quando entra na lista, aumenta o contador
 
     v[raiz].in = cont;
 
@@ -32,7 +32,7 @@ void DFS(vertice *v, int qtd_vertices, int raiz)
         }
     }
 
-    cont++;
+    cont++; //Quando sai da lista, aumenta o contador
     v[raiz].out = cont;
 }
 

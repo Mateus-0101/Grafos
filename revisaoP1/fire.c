@@ -37,7 +37,7 @@ int main()
     scanf("%d %d", &qtd_vertice, &qtd_arestas);
 
     vertice *vertices = (vertice*)calloc(qtd_vertice+1,sizeof(vertice));
-    grupo = (int*)calloc(qtd_vertice,sizeof(int));
+   // grupo = (int*)calloc(qtd_vertice,sizeof(int));
 
     for(int i = 0; i < qtd_arestas; i++)
     {

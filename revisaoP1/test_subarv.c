@@ -20,8 +20,8 @@ void DFS(vertice *v, int qtd_vertices, int raiz)
     }
 
     v[raiz].visitado = 1;
+    
     cont++;
-
     v[raiz].in = cont;
 
     for(int i = 0; i < v[raiz].tamanho; i++)
