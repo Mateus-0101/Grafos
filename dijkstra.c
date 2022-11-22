@@ -4,7 +4,6 @@
 typedef struct elemento
 {
     int valor;
-    int prioridade;
     struct elemento *prox;
 }elemento;
 
@@ -20,6 +19,7 @@ typedef struct vertice
     int visitado;
     int tamanho;
     int distancia;
+    int peso;
     int lista_adj[1000];
 }vertice;
 
@@ -35,39 +35,23 @@ int vazio(fila *f)
     }
 }
 
-int topo(fila *f)
-{
-    return f->inicio->valor;
-}
-
 void inserir_fila(fila *f, int x)
 {
     elemento *novo = (elemento*)calloc(1,sizeof(elemento));
-    elemento *aux = (elemento*)calloc(1,sizeof(elemento));
     novo->valor = x;
-    novo->prioridade = x;
 
-    //Novo elementento possui maior prioridade que o inicio da lista
-    if(f->inicio->prioridade < novo->prioridade)
+    if(f->tamanho == 0)
     {
-        novo->prox = f->inicio;
         f->inicio = novo;
+        f->final = novo;
     }
     else
     {
-        //Percorre fila até achar posição adequada para o elemento
-        while(aux->prox != NULL && aux->prox->prioridade > novo->prioridade)
-        {
-            aux = aux->prox;
-        }
-
-        //Reorganiza fila
-        novo->prox = aux->prox;
-        aux->prox = novo;
+        f->final->prox = novo;
+        f->final = novo;
     }
     f->tamanho++;
 }
-
 
 int retirar_fila(fila *f)
 {
@@ -77,12 +61,13 @@ int retirar_fila(fila *f)
     }
     else
     {
-        elemento *aux = (elemento*)calloc(1,sizeof(elemento));
-        aux = f->inicio;
-        f->inicio = f->inicio->prox;
+        int ret;
 
-        return aux->valor;
-        free(aux);
+        ret = f->inicio->valor; //Retorno será o valor do primeiro da fila
+        f->inicio = f->inicio->prox; //Novo início será o próximo da fila
+        f->tamanho--;
+
+        return ret;
     }
 }
 
@@ -91,23 +76,18 @@ void BFS(vertice *v, int raiz)
     int atual, filho;
     fila *f = calloc(1,sizeof(fila));
 
+    v[raiz].distancia = 0;
+    
+
     inserir_fila(f,raiz);
 
     while(!vazio(f))
     {
         atual = retirar_fila(f);
-        v[atual].visitado = 1;
 
         for(int i = 0; i < v[atual].tamanho; i++)
         {
-            filho = v[atual].lista_adj[i];
-
-            if(v[atual].distancia + v[filho].distancia < v[filho].distancia)
-            {
-                v[atual].distancia = v[filho].distancia;
-
-                inserir_fila(f,filho);
-            }
+            
         }
     }
 }
@@ -129,6 +109,7 @@ void mostrar(vertice *v, int qtd_vertices)
 int main()
 {
     int qtd_vertices, qtd_arestas, raiz, u, v, x;
+    int infinito = 99999;
 
     scanf("%d %d", &qtd_vertices, &qtd_arestas);
 
@@ -139,19 +120,21 @@ int main()
         scanf("%d %d %d", &u, &v, &x);
 
         vertices[u].lista_adj[vertices[u].tamanho] = v;
-        vertices[u].distancia = x;
         vertices[u].tamanho++;
+        vertices[u].peso = x;
+        vertices[u].distancia = infinito;
 
         vertices[v].lista_adj[vertices[v].tamanho] = u;
-        vertices[v].distancia = x;
         vertices[v].tamanho++;
+        vertices[v].peso = x;
+        vertices[v].distancia = infinito;
     }
 
     scanf("%d", &raiz);
 
     BFS(vertices, raiz); //Em BFS tem que indicar a raiz
 
-    mostrar(vertices,qtd_vertices);
+    //mostrar(vertices,qtd_vertices);
 
     printf("\n");
 
