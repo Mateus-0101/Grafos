@@ -162,176 +162,44 @@ void dijkstra(vertice *v, int raiz)
 
 int main()
 {
-    int qtd_vertices, qtd_arestas, u, v, x;
+    int qtd_vertices, qtd_arestas, raiz, u, v, x;
     int infinito = 99999;
     aresta ast;
 
-    //scanf("%d %d", &qtd_vertices, &qtd_arestas);
+    printf("Indique a quantidade de vértices e arestas na matriz:\n");
+    scanf("%d %d", &qtd_vertices, &qtd_arestas);
 
-    vertice *vertices = (vertice*)calloc(15,sizeof(vertice));
+    vertice *vertices = (vertice*)calloc(qtd_vertices+1,sizeof(vertice));
 
-    ast.peso = 6;
-    ast.vertice = 2;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+    printf("Indicação:\n1 = A\n2 = B\n3 = C\n4 = D\n...\n");
+    printf("Escolha uma raíz para o Dijkstra:\n");
+    scanf("%d", &raiz);
+    printf("Inserir valores começando pela raiz\n");
 
-    ast.vertice = 1;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
+    for(int i = 0 ; i < qtd_arestas; i++)
+    {
+        scanf("%d %d %d", &u, &v, &x);
 
-    ast.peso = 9;
-    ast.vertice = 3;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+        ast.peso = x;
 
-    ast.vertice = 1;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
+        ast.vertice = v;
+        vertices[u].lista_adj[vertices[u].tamanho] = ast;
+        vertices[u].distancia = infinito;
+        vertices[u].tamanho++;
 
-    ast.peso = 11;
-    ast.vertice = 4;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+        ast.vertice = x;
+        vertices[v].lista_adj[vertices[v].tamanho] = ast;
+        vertices[u].distancia = infinito;
+        vertices[u].tamanho++;
+    }
 
-    ast.vertice = 1;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
+    dijkstra(vertices,raiz);
 
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
-
-    ast.vertice = 1;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 9;
-    ast.vertice = 6;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
-
-    ast.vertice = 1;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 3;
-    ast.vertice = 3;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.peso = 6;
-    ast.vertice = 4;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 2;
-    ast.vertice = 6;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 4;
-    ast.vertice = 5;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.vertice = 3;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 4;
-    ast.vertice = 5;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.vertice = 3;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.vertice = 4;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 6;
-    ast.vertice = 6;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.vertice = 4;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 8;
-    ast.vertice = 6;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.vertice = 5;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    dijkstra(vertices,6);
-
-    printf("Distância entre F e A = %d\n", vertices[1].distancia);
-    printf("Distância entre F e B = %d\n", vertices[2].distancia);
-    printf("Distância entre F e C = %d\n", vertices[3].distancia);
-    printf("Distância entre F e D = %d\n", vertices[4].distancia);
-    printf("Distância entre F e E = %d\n", vertices[5].distancia);
-    printf("Distância entre F e F = %d\n", vertices[6].distancia);
+    for(int i = 1; i <= qtd_vertices; i++)
+    {
+        printf("Distância entre a %d e %d = %d\n", raiz, i, vertices[i].distancia);
+    }
+    
 
     return 0;
 }

@@ -21,8 +21,8 @@ typedef struct lista
 
 typedef struct vertice
 {
-    int tamanho;
     int distancia;
+    int tamanho;
     struct aresta list_adj[1000];
 }vertice;
 
@@ -38,7 +38,7 @@ int vazio(lista *l)
     }
 }
 
-void incluir_lista(lista *l, int valor, int dist)
+void inserir_lista(lista *l, int valor, int dist)
 {
     if(l == NULL)
     {
@@ -59,7 +59,7 @@ void incluir_lista(lista *l, int valor, int dist)
         int inserido = 0;
         aux = l->inicio;
 
-        while(aux != NULL && !inserido)
+        while (aux != NULL && !inserido)
         {
             if(aux->ast.peso < novo->ast.peso)
             {
@@ -80,7 +80,7 @@ void incluir_lista(lista *l, int valor, int dist)
                 novo->prox = aux;
                 inserido = 1;
             }
-        }
+        }     
         if(!inserido)
         {
             ant->prox = novo;
@@ -98,13 +98,13 @@ aresta retirar_lista(lista *l)
 
     if(vazio(l))
     {
-        ret.vertice = -1;
         ret.peso = -1;
+        ret.vertice = -1;
     }
     else
     {
         aux = l->inicio;
-        l->inicio = l->inicio->prox;
+        l->inicio = aux->prox;
 
         ret.vertice = aux->ast.vertice;
         ret.peso = aux->ast.peso;
@@ -114,7 +114,7 @@ aresta retirar_lista(lista *l)
     }
 }
 
-void dijkstra(vertice *v, int raiz)
+void Dijkstra(vertice *v, int raiz)
 {
     lista *l = (lista*)calloc(1,sizeof(lista));
     aresta atual, prox;
@@ -122,7 +122,7 @@ void dijkstra(vertice *v, int raiz)
 
     v[raiz].distancia = 0;
 
-    incluir_lista(l,raiz,v[raiz].distancia);
+    inserir_lista(l,raiz,v[raiz].distancia);
 
     while(!vazio(l))
     {
@@ -131,13 +131,14 @@ void dijkstra(vertice *v, int raiz)
         {
             filho = v[atual.vertice].list_adj[i].vertice;
             prox = v[atual.vertice].list_adj[i];
+
             custo = atual.peso + prox.peso;
 
             if(custo < v[filho].distancia)
             {
                 v[filho].distancia = custo;
 
-                incluir_lista(l,filho,custo);
+                inserir_lista(l,filho,custo);
             }
         }
     }
@@ -145,13 +146,15 @@ void dijkstra(vertice *v, int raiz)
 
 int main()
 {
-    int qtd_vert, qtd_art, u, v, x;
-    int infinito = 99999;
+    int qtd_vert, qtd_art, raiz, u, v, x;
+    int infinito = 9999;
     aresta ast;
 
     scanf("%d %d", &qtd_vert, &qtd_art);
 
     vertice *vert = (vertice*)calloc(qtd_vert+1,sizeof(vertice));
+
+    printf("Indicação:\n1 = A\n2 = B\n3 = C\n4 = D\n...\n");
 
     for(int i = 0; i < qtd_art; i++)
     {
@@ -162,7 +165,7 @@ int main()
         ast.vertice = v;
         vert[u].list_adj[vert[u].tamanho] = ast;
         vert[u].distancia = infinito;
-        vert[u].tamanho++;
+        vert[u].tamanaho++;
 
         ast.vertice = u;
         vert[v].list_adj[vert[v].tamanho] = ast;
@@ -170,11 +173,14 @@ int main()
         vert[v].tamanho++;
     }
 
-    dijkstra(vert,6);
+    printf("Escolha uma raíz para o Dijkstra:\n");
+    scanf("%d", &raiz);
+    
+    Dijkstra(vert,raiz);
 
     for(int i = 1; i <= qtd_vert; i++)
     {
-        printf("Distância entre raiz e vértice %d = %d\n",i,vert[i].distancia);
+        printf("Distância entre %d e %d = %d\n", raiz,i, vert[i].distancia);
     }
 
     return 0;

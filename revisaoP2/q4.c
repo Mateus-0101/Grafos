@@ -130,7 +130,7 @@ void mostrar(vertice *v, int qtd_vertices)
     }
 }
 
-void dijkstra(vertice *v, int raiz)
+void Dijkstra(vertice *v, int raiz)
 {
     fila *f = (fila*)calloc(1,sizeof(fila));
     aresta atual;
@@ -165,167 +165,42 @@ int main()
     int infinito = 99999;
     aresta ast;
 
-    //scanf("%d %d", &qtd_vertices, &qtd_arestas);
+    scanf("%d %d", &qtd_vertices, &qtd_arestas);
 
-    vertice *vertices = (vertice*)calloc(15,sizeof(vertice));
+    vertice *vert = (vertice*)calloc(15,sizeof(vertice));
 
-    ast.peso = 6;
-    ast.vertice = 2;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+    printf("Indicação:\n1 = A\n2 = B\n3 = C\n4 = D\n...\n");
 
-    ast.vertice = 1;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
+    for(int i = 0; i < qtd_arestas; i++)
+    {
+        scanf("%d %d %d", &u, &v, &x);
 
-    ast.peso = 9;
-    ast.vertice = 3;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+        ast.peso = x;
 
-    ast.vertice = 1;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
+        ast.vertice = v;
+        vert[u].lista_adj[vert[u].tamanho] = ast;
+        vert[u].distancia = infinito;
+        vert[u].tamanho++;
 
-    ast.peso = 11;
-    ast.vertice = 4;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
+        ast.vertice = u;
+        vert[v].lista_adj[vert[v].tamanho] = ast;
+        vert[v].distancia = infinito;
+        vert[v].tamanho++;
+    }
+    
+    Dijkstra(vert,1);
 
-    ast.vertice = 1;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
+    mostrar(vert,qtd_vertices);
 
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
-
-    ast.vertice = 1;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 9;
-    ast.vertice = 6;
-    vertices[1].lista_adj[vertices[1].tamanho] = ast;
-    vertices[1].distancia = infinito;
-    vertices[1].tamanho++;
-
-    ast.vertice = 1;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 3;
-    ast.vertice = 3;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.peso = 6;
-    ast.vertice = 4;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 2;
-    ast.vertice = 6;
-    vertices[2].lista_adj[vertices[2].tamanho] = ast;
-    vertices[2].distancia = infinito;
-    vertices[2].tamanho++;
-
-    ast.vertice = 2;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 4;
-    ast.vertice = 5;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.vertice = 3;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 4;
-    ast.vertice = 5;
-    vertices[3].lista_adj[vertices[3].tamanho] = ast;
-    vertices[3].distancia = infinito;
-    vertices[3].tamanho++;
-
-    ast.vertice = 3;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 5;
-    ast.vertice = 5;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.vertice = 4;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.peso = 6;
-    ast.vertice = 6;
-    vertices[4].lista_adj[vertices[4].tamanho] = ast;
-    vertices[4].distancia = infinito;
-    vertices[4].tamanho++;
-
-    ast.vertice = 4;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    ast.peso = 8;
-    ast.vertice = 6;
-    vertices[5].lista_adj[vertices[5].tamanho] = ast;
-    vertices[5].distancia = infinito;
-    vertices[5].tamanho++;
-
-    ast.vertice = 5;
-    vertices[6].lista_adj[vertices[6].tamanho] = ast;
-    vertices[6].distancia = infinito;
-    vertices[6].tamanho++;
-
-    dijkstra(vertices,6);
-
-    mostrar(vertices,6);
+    /*
+    Vertices = Letras:
+        1   =   A
+        2   =   B
+        3   =   C 
+        4   =   D
+        5   =   E
+        6   =   F
+    */
 
     printf("\n");
 
